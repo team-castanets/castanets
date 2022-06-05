@@ -15,7 +15,7 @@ class GithubActionsContext:
     Github Actions의 Context를 담습니다.
     """
 
-    #: Github Webhook Event의 종류를 나타내는 이름
+    #: Github Webhook Event
     event_name: str
     #: Github Repo Full Name (org/repo)
     repo: str
@@ -23,13 +23,13 @@ class GithubActionsContext:
     ref: str
     #: Github Personal Access Token
     token: str
-    #: 해당 Event가 어떤 type인지 나타내는 action (ex:opened, edited, ...)
+    #: Event type (ex:opened, edited, ...)
     action: Optional[str] = None
-    #: Github의 PR/Issue에 대한 Number
+    #: Github PR/Issue number
     issue_id: Optional[int] = None
-    #: issue_comment Event 발생시 Comment 내용
+    #: Issue comment
     issue_comment: Optional[str] = None
-    #: issue_comment Event 발생시 Comment 작성자
+    #: Author of issue comment
     issue_comment_author: Optional[str] = None
 
     @classmethod
@@ -42,7 +42,7 @@ class GithubActionsContext:
         token: str,
     ) -> "GithubActionsContext":
         """
-        Github Actions의 Context를 생성합니다.
+        Construct GithubActionsContext.
         """
         with open(event_path, "r") as f:
             webhook_payload = json.load(f)
@@ -74,10 +74,10 @@ class GithubActionsContext:
 @dataclass
 class CastanetsContext:
     """
-    Castanets의 Context를 담습니다.
+    Castanets Context
     """
 
-    #: Castanets의 전체 프로세스 정보를 담고 있는 Config
+    #: Castanets process info
     config: CastanetsConfig
     #: Is Finished
     finished: Optional[bool] = False
@@ -98,7 +98,7 @@ class CastanetsContext:
         approvers: Optional[List[str]] = None,
     ) -> "CastanetsContext":
         """
-        Castanets의 Context를 생성합니다.
+        Create castanets context.
         """
         jinja_env = Environment(
             loader=FileSystemLoader(os.path.dirname(config_path)), extensions=["jinja2_time.TimeExtension"]
