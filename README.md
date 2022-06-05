@@ -98,7 +98,7 @@ Each Stage, Castanets makes the comment below. You can get detailed information 
 
 ## Click, clack. We are moving forward!
 
-Review stage changed from **Start** to **Sampling**. [Workflow was triggered](https://github.com/scatterlab/castanets-poc-will-be-removed/actions/workflows/stage_one.yaml) for this stage.
+Review stage changed from **Start** to **Sampling**. [Workflow was triggered](https://google.com) for this stage.
 
 ```mermaid
 
