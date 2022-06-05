@@ -66,7 +66,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          token: ${{ secrets.SCATTERBOT_GITHUB_TOKEN }}
+          token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
           submodules: true
       - name: Castanets
         id: castanets
@@ -75,9 +75,9 @@ jobs:
         with:
           config-path: castanets.yaml  # Process config path
           issue-autoclose: true  # Auto close issue after process
-          token: ${{ secrets.SCATTERBOT_GITHUB_TOKEN }}  # Github PAT
+          token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}  # Github PAT
           slack: true  # Enable Slack notification
-          slack-token: ${{ secrets.SCATTERBOT_SLACK_TOKEN }}  # Slack Webhook Token
+          slack-token: ${{ secrets.SLACK_TOKEN }}  # Slack Webhook Token
           slack-channel: "#ml-pipeline-alert-test"  # Slack channel to send alert
 ```
 
