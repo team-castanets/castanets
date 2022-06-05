@@ -1,0 +1,7 @@
+name: Castanets Example Stage 1
+on: [workflow_dispatch]
+jobs:
+  integration-test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo 'Stage One!'

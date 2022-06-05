@@ -1,0 +1,19 @@
+name: Castanets Example Process
+on:
+  issues:
+    types: [opened]
+  issue_comment: 
+    types: [created]
+concurrency: castanets-${{ github.ref }}
+jobs:
+  castanets:
+    runs-on: ubuntu-latest
+    if: "contains(github.event.issue.title, '[Castanets]')"
+    steps:
+      - uses: actions/checkout@v3
+      - name: Castanets
+        id: castanets
+        uses: ./
+        with:
+          config-path: resources/castanets_example.yaml
+          token: ${{ secrets.GITHUB_PERSONAL_TOKEN }}

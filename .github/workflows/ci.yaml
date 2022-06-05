@@ -1,0 +1,58 @@
+name: CI
+
+on: [push]
+
+jobs:
+  run-test:
+    name: Run Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: env
+          key: deps-${{ hashFiles('**/requirements.txt') }}-${{ hashFiles('**/requirements-dev.txt') }}
+
+      - name: Create Virtual Environment and Install Dependencies
+        run: |
+          python3 -m venv env
+          . env/bin/activate
+          pip install -r requirements.txt -r requirements-dev.txt
+
+      - name: Run Test
+        run: |
+          . env/bin/activate
+          pytest --cov-branch --cov castanets
+
+  check-linting:
+    name: Check linting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: env
+          key: deps-${{ hashFiles('**/requirements.txt') }}-${{ hashFiles('**/requirements-dev.txt') }}
+
+      - name: Create Virtual Environment and Install Dependencies
+        run: |
+          python3 -m venv env
+          . env/bin/activate
+          pip install -r requirements.txt -r requirements-dev.txt
+
+      - name: Run black, flake8, isort
+        run: |
+          . env/bin/activate
+          black --check castanets tests
+          flake8 castanets tests
+          isort -c castanets tests
