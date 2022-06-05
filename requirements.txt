@@ -1,0 +1,10 @@
+python-dotenv
+PyYAML
+requests
+pydantic
+inflection
+jinja2
+jinja2-time
+slack_sdk
+markdown
+importlib_metadata

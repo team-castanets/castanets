@@ -1,0 +1,30 @@
+name: "Castanets"
+description: "Tool for Multi-stage Review Process"
+author: "Castanets"
+inputs:
+  config-path:
+    description: "Configuration file path"
+    default: "castanets.yml"
+  token:
+    description: "Github Personal Access Token"
+    required: true
+  issue-autoclose:
+    description: "Auto close issue after review"
+    default: false
+  slack:
+    description: "Use Slack Alert"
+    default: false
+  slack-token:
+    description: "Slack Webhook Token"
+  slack-channel:
+    description: "Slack Channel"
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  env:
+    GITHUB_TOKEN: ${{ inputs.token }}
+    ISSUE_AUTOCLOSE: ${{ inputs.issue-autoclose }}
+    SLACK: ${{ inputs.slack }}
+    SLACK_TOKEN: ${{ inputs.slack-token }}
+    SLACK_CHANNEL: ${{ inputs.slack-channel }}
+    CASTANETS_CONFIG_PATH: ${{ inputs.config-path }}

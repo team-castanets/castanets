@@ -1,0 +1,13 @@
+[tool.black]
+line-length = 120
+target-version = ['py37']
+include = '\.py$'
+
+[tool.pytest.ini_options]
+addopts = "-s -v --tb=line"
+testpaths = [ "tests" ]
+filterwarnings = [
+    "error",
+    "ignore::UserWarning",
+    'ignore::DeprecationWarning',
+]

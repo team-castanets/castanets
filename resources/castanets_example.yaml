@@ -1,0 +1,21 @@
+name: Test Castanets Process
+description: Process for testing Castanets
+stages:
+  - name: Example Stage 1
+    label: example_stage_one
+    description: Description of Example Stage 1.
+    review:
+      reviewers: ["FYLSunghwan", "harrydrippin"]
+      must_review: ["FYLSunghwan"]
+      minimum_approval: 1
+    workflow:
+      filename: example_stage_one.yaml
+  - name: Example Stage 2
+    label: example_stage_two
+    description: Description of Example Stage 2.
+    review:
+      reviewers: ["FYLSunghwan", "harrydrippin"]
+      must_review: ["harrydrippin"]
+      minimum_approval: 1
+    workflow:
+      filename: example_stage_two.yaml
