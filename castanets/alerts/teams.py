@@ -72,7 +72,7 @@ class TeamsAlert(BaseAlert):
         :returns: Teams message blocks
         """
         section = pymsteams.cardsection()
-        section.text("*{username}* has created *{'✅ Approved' if is_approval else '❌ Dismiss'}* review.")
+        section.text("**{username}** has created **{'✅ Approved' if is_approval else '❌ Dismiss'}** review.")
         self.teams.addSection(section)
 
     def _render_remaining_reviewers(self, approvers: List[str], reviewers: List[str], must_review: List[str]):
