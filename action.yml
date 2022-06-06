@@ -18,6 +18,11 @@ inputs:
     description: "Slack Webhook Token"
   slack-channel:
     description: "Slack Channel"
+  teams:
+    description: "Use Teams Alert"
+    default: false
+  teams-webhook-url:
+    description: "Microsoft Teams Webhook URL"
 runs:
   using: "docker"
   image: "Dockerfile"
@@ -28,3 +33,5 @@ runs:
     SLACK_TOKEN: ${{ inputs.slack-token }}
     SLACK_CHANNEL: ${{ inputs.slack-channel }}
     CASTANETS_CONFIG_PATH: ${{ inputs.config-path }}
+    TEAMS: ${{ inputs.teams }}
+    TEAMS_WEBHOOK_URL: ${{ inputs.teams-webhook-url }}

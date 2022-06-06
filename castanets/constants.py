@@ -40,9 +40,12 @@ ISSUE_AUTOCLOSE = boolean_str_to_bool(check_and_load("ISSUE_AUTOCLOSE"))
 
 #: Slack
 SLACK = boolean_str_to_bool(check_and_load("SLACK"))
-if SLACK:
-    SLACK_TOKEN = check_and_load("SLACK_TOKEN")
-    SLACK_CHANNEL = check_and_load("SLACK_CHANNEL")
+SLACK_TOKEN = check_and_load("SLACK_TOKEN") if SLACK else None
+SLACK_CHANNEL = check_and_load("SLACK_CHANNEL") if SLACK else None
+
+#: Teams
+TEAMS = boolean_str_to_bool(check_and_load("TEAMS"))
+TEAMS_WEBHOOK_URL = check_and_load("TEAMS_WEBHOOK_URL") if TEAMS else None
 
 #: Others
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
