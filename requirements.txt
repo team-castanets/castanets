@@ -8,3 +8,4 @@ jinja2-time
 slack_sdk
 markdown
 importlib_metadata
+pymsteams

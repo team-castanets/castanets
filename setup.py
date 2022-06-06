@@ -15,6 +15,7 @@ setup(
         "slack_sdk",
         "markdown",
         "importlib_metadata",
+        "pymsteams",
     ],
     url="https://github.com/team-castanets/castanets.git",
     author="Castanets",

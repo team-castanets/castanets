@@ -43,5 +43,9 @@ SLACK = boolean_str_to_bool(check_and_load("SLACK"))
 SLACK_TOKEN = check_and_load("SLACK_TOKEN") if SLACK else None
 SLACK_CHANNEL = check_and_load("SLACK_CHANNEL") if SLACK else None
 
+#: Teams
+TEAMS = boolean_str_to_bool(check_and_load("TEAMS"))
+TEAMS_WEBHOOK_URL = check_and_load("TEAMS_WEBHOOK_URL") if TEAMS else None
+
 #: Others
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
