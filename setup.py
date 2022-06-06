@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="castanets",
-    version="1.0.0",
+    version="1.0.1",
     description="Tool for Multi-stage Review Process",
     install_requires=[
         "python-dotenv",
