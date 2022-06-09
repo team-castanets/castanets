@@ -94,12 +94,15 @@ def stage_clean_up():
     Clean up current stage.
     """
     stage_idx = context.castanets.stage_idx
-    stage_label = context.castanets.config.stages[stage_idx].label
+    stage = context.castanets.config.stages[stage_idx]
     github.remove_label(
         context.github_actions,
-        get_castanets_stage_label(stage_label),
+        get_castanets_stage_label(stage.label),
     )
     github.write_state_to_first_comment(context.github_actions, {})
+
+    if stage.workflow_clean_up is not None:
+        github.run_workflow(context.github_actions, stage.workflow_clean_up.filename, stage.workflow_clean_up.inputs)
 
 
 @command("stage_next")

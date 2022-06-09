@@ -26,6 +26,8 @@ stages:
         jinja: {{ params.stage_one.param1 }}
         jinja-time: {% now 'Asia/Seoul', '%a, %d %b %Y %H:%M:%S' %}
         normal: param
+    workflow_clean_up:
+      filename: stage_one_cleanup.yaml
         
 ```
 
@@ -42,6 +44,7 @@ stages:
   - **workflow**: GitHub Actions Workflow to run
     - **filename**: Github Actions Workflow filename (.github/workflows/<filename>, must subscribe on `workflow_dispatch`)
     - **inputs**: Workflow input
+  - **workflow_clean_up**: GitHub Actions Workflow to run after stage moves to next stage (Same as `workflow`)
 
 **IMPORTANT: Jinja template is enabled.** 
 
