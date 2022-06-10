@@ -253,6 +253,6 @@ def remove_assignees(context: GithubActionsContext, assignees: List[str]):
     return _base_api_call(
         context=context,
         endpoint=f"issues/{context.issue_id}/assignees",
-        method="POST",
+        method="DELETE",
         payload={"assignees": assignees},
     )
