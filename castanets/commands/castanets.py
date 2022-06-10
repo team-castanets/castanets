@@ -53,12 +53,17 @@ def stage_start(stage_idx: int):
     else:
         prev_stage_name = context.castanets.config.stages[stage_idx - 1].name
     mermaid = get_mermaid_from_context(context.castanets, stage_idx)
+    workflow_url = (
+        f"https://github.com/{context.github_actions.repo}/actions/workflows/{stage.workflow.filename}"
+        if stage.workflow
+        else None
+    )
 
     template = jinja_env.get_template("castanets_process.md")
     comment = template.render(
         prev_stage=prev_stage_name,
         current_stage=stage.name,
-        workflow_url=f"https://github.com/{context.github_actions.repo}/actions/workflows/{stage.workflow.filename}",
+        workflow_url=workflow_url,
         stage_mermaid=mermaid,
         description=stage.description,
         minimum_approval=stage.review.minimum_approval,

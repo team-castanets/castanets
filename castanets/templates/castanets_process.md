@@ -1,6 +1,7 @@
 ## Click, clack. We are moving forward!
 
-Review stage changed from **{{ prev_stage }}** to **{{ current_stage }}**. [Workflow was triggered]({{ workflow_url }}) for this stage.
+Review stage changed from **{{ prev_stage }}** to **{{ current_stage }}**.
+{% if workflow_url %}[Workflow was triggered]({{ workflow_url }}) for this stage.{% endif %}
 
 ```mermaid
 {{ stage_mermaid }}
