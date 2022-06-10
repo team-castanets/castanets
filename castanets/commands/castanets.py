@@ -53,12 +53,17 @@ def stage_start(stage_idx: int):
     else:
         prev_stage_name = context.castanets.config.stages[stage_idx - 1].name
     mermaid = get_mermaid_from_context(context.castanets, stage_idx)
+    workflow_url = (
+        f"https://github.com/{context.github_actions.repo}/actions/workflows/{stage.workflow.filename}"
+        if stage.workflow
+        else None
+    )
 
     template = jinja_env.get_template("castanets_process.md")
     comment = template.render(
         prev_stage=prev_stage_name,
         current_stage=stage.name,
-        workflow_url=f"https://github.com/{context.github_actions.repo}/actions/workflows/{stage.workflow.filename}",
+        workflow_url=workflow_url,
         stage_mermaid=mermaid,
         description=stage.description,
         minimum_approval=stage.review.minimum_approval,
@@ -68,7 +73,9 @@ def stage_start(stage_idx: int):
 
     github.comment(context.github_actions, comment)
     github.set_label(context.github_actions, get_castanets_stage_label(stage.label))
-    github.run_workflow(context.github_actions, stage.workflow.filename, stage.workflow.inputs)
+    github.set_assignees(context.github_actions, stage.review.reviewers)
+    if stage.workflow:
+        github.run_workflow(context.github_actions, stage.workflow.filename, stage.workflow.inputs)
 
     # State update
     state = github.read_state_from_first_comment(context.github_actions)
@@ -94,12 +101,16 @@ def stage_clean_up():
     Clean up current stage.
     """
     stage_idx = context.castanets.stage_idx
-    stage_label = context.castanets.config.stages[stage_idx].label
+    stage = context.castanets.config.stages[stage_idx]
     github.remove_label(
         context.github_actions,
-        get_castanets_stage_label(stage_label),
+        get_castanets_stage_label(stage.label),
     )
+    github.remove_assignees(context.github_actions, stage.review.reviewers)
     github.write_state_to_first_comment(context.github_actions, {})
+
+    if stage.workflow_clean_up:
+        github.run_workflow(context.github_actions, stage.workflow_clean_up.filename, stage.workflow_clean_up.inputs)
 
 
 @command("stage_next")

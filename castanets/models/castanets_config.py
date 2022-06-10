@@ -67,8 +67,10 @@ class CastanetsStage:
     description: str
     #: Stage approval condition
     review: Review
-    #: Workflow to run
+    #: Workflow to run on stage start
     workflow: Optional[Workflow] = None
+    #: Workflow to run on stage clean up
+    workflow_clean_up: Optional[Workflow] = None
 
 
 @dataclass

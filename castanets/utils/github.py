@@ -1,9 +1,16 @@
-from typing import Optional
+from typing import List, Optional
 
 import requests
 
 from castanets.models import GithubActionsContext
-from castanets.utils import embed_state_to_comment, get_castanets_params_from_comment, get_castanets_state_from_comment
+from castanets.utils import (
+    embed_state_to_comment,
+    get_castanets_params_from_comment,
+    get_castanets_state_from_comment,
+    get_logger,
+)
+
+logger = get_logger(__name__)
 
 
 def _base_api_call(
@@ -30,6 +37,7 @@ def _base_api_call(
     else:
         url = f"https://api.github.com/repos/{context.repo}/{endpoint}"
 
+    logger.info(f"Calling {url} with payload {payload}")
     if method == "POST":
         response = requests.post(url, headers=headers, json=payload)
     elif method == "GET":
@@ -37,7 +45,7 @@ def _base_api_call(
     elif method == "PATCH":
         response = requests.patch(url, headers=headers, json=payload)
     elif method == "DELETE":
-        response = requests.delete(url, headers=headers)
+        response = requests.delete(url, headers=headers, json=payload)
     else:
         raise ValueError(f"Invalid Method: {method}")
 
@@ -225,4 +233,34 @@ def remove_label(context: GithubActionsContext, label: str):
         context=context,
         endpoint=f"issues/{context.issue_id}/labels/{label}",
         method="DELETE",
+    )
+
+
+def set_assignees(context: GithubActionsContext, assignees: List[str]):
+    """
+    Set assignees to a Github Issue
+
+    :param context: Context of Github Actions
+    :param assignee: Github Assignee
+    """
+    return _base_api_call(
+        context=context,
+        endpoint=f"issues/{context.issue_id}/assignees",
+        method="POST",
+        payload={"assignees": assignees},
+    )
+
+
+def remove_assignees(context: GithubActionsContext, assignees: List[str]):
+    """
+    Remove assignees from a Github Issue
+
+    :param context: Context of Github Actions
+    :param assignee: Github Assignee
+    """
+    return _base_api_call(
+        context=context,
+        endpoint=f"issues/{context.issue_id}/assignees",
+        method="DELETE",
+        payload={"assignees": assignees},
     )

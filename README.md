@@ -26,11 +26,10 @@ stages:
         jinja: {{ params.stage_one.param1 }}
         jinja-time: {% now 'Asia/Seoul', '%a, %d %b %Y %H:%M:%S' %}
         normal: param
+    workflow_clean_up:
+      filename: stage_one_cleanup.yaml
         
 ```
-
-**IMPORTANT: Jinja template is enabled. Parameters written in GitHub Issue will be injected in `params` variable.
-Also, with [Jinja2-Time](https://github.com/hackebrot/jinja2-time) you can get current time in config.**
 
 - **name**: Process name
 - **description**: Process description
@@ -45,6 +44,18 @@ Also, with [Jinja2-Time](https://github.com/hackebrot/jinja2-time) you can get c
   - **workflow**: GitHub Actions Workflow to run
     - **filename**: Github Actions Workflow filename (.github/workflows/<filename>, must subscribe on `workflow_dispatch`)
     - **inputs**: Workflow input
+  - **workflow_clean_up**: GitHub Actions Workflow to run after stage moves to next stage (Same as `workflow`)
+
+**IMPORTANT: Jinja template is enabled.** 
+
+- **`params`**: Parameters written in GitHub Issue will be injected in `params` variable.
+  - ex) `{{ params.param_a }}`
+- **`github`**: Access to `GithubActionsContext`, defined in `models/contexts.py`.
+  - ex) `{{ github.issue_id }}`
+- **`state`**: Access to state saved in the Castanets' issue comment.
+  - ex) `{{ state.workflow_output.output_a }}`
+- **[Jinja2-Time](https://github.com/hackebrot/jinja2-time)**: you can get current time in config.**
+  - ex) `{% now 'Asia/Seoul', '%a, %d %b %Y %H:%M:%S' %}`
 
 ### Github Actions Settings
 

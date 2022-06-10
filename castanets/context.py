@@ -53,6 +53,8 @@ class Context:
         finished = state.get("finished", False)
         castanets = CastanetsContext.construct(
             os.path.join(GITHUB_WORKSPACE, CASTANETS_CONFIG_PATH),
+            github_actions,
+            state,
             finished=finished,
             params=params,
             stage_idx=stage_idx,

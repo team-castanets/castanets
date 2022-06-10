@@ -92,6 +92,8 @@ class CastanetsContext:
     def construct(
         cls,
         config_path: str,
+        github_actions_context: GithubActionsContext,
+        state: Optional[dict] = None,
         finished: bool = False,
         params: Optional[dict] = None,
         stage_idx: Optional[int] = None,
@@ -104,7 +106,9 @@ class CastanetsContext:
             loader=FileSystemLoader(os.path.dirname(config_path)), extensions=["jinja2_time.TimeExtension"]
         )
         template = jinja_env.get_template(os.path.basename(config_path))
-        config_dict = yaml.load(template.render(params=params), Loader=yaml.FullLoader)
+        config_dict = yaml.load(
+            template.render(params=params, github=github_actions_context, state=state), Loader=yaml.FullLoader
+        )
 
         return cls(
             config=CastanetsConfig.from_dict(config_dict),
