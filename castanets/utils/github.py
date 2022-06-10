@@ -37,7 +37,7 @@ def _base_api_call(
     elif method == "PATCH":
         response = requests.patch(url, headers=headers, json=payload)
     elif method == "DELETE":
-        response = requests.delete(url, headers=headers)
+        response = requests.delete(url, headers=headers, json=payload)
     else:
         raise ValueError(f"Invalid Method: {method}")
 
