@@ -228,9 +228,9 @@ def remove_label(context: GithubActionsContext, label: str):
     )
 
 
-def add_assignees(context: GithubActionsContext, assignees: List[str]):
+def set_assignees(context: GithubActionsContext, assignees: List[str]):
     """
-    Add assignees to a Github Issue
+    Set assignees to a Github Issue
 
     :param context: Context of Github Actions
     :param assignee: Github Assignee
