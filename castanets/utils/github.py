@@ -3,7 +3,14 @@ from typing import List, Optional
 import requests
 
 from castanets.models import GithubActionsContext
-from castanets.utils import embed_state_to_comment, get_castanets_params_from_comment, get_castanets_state_from_comment
+from castanets.utils import (
+    embed_state_to_comment,
+    get_castanets_params_from_comment,
+    get_castanets_state_from_comment,
+    get_logger,
+)
+
+logger = get_logger(__name__)
 
 
 def _base_api_call(
@@ -30,6 +37,7 @@ def _base_api_call(
     else:
         url = f"https://api.github.com/repos/{context.repo}/{endpoint}"
 
+    logger.info(f"Calling {url} with payload {payload}")
     if method == "POST":
         response = requests.post(url, headers=headers, json=payload)
     elif method == "GET":
