@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Optional
 
 import requests
 
@@ -225,4 +225,34 @@ def remove_label(context: GithubActionsContext, label: str):
         context=context,
         endpoint=f"issues/{context.issue_id}/labels/{label}",
         method="DELETE",
+    )
+
+
+def add_assignees(context: GithubActionsContext, assignees: List[str]):
+    """
+    Add assignees to a Github Issue
+
+    :param context: Context of Github Actions
+    :param assignee: Github Assignee
+    """
+    return _base_api_call(
+        context=context,
+        endpoint=f"issues/{context.issue_id}/assignees",
+        method="POST",
+        payload={"assignees": assignees},
+    )
+
+
+def remove_assignees(context: GithubActionsContext, assignees: List[str]):
+    """
+    Remove assignees from a Github Issue
+
+    :param context: Context of Github Actions
+    :param assignee: Github Assignee
+    """
+    return _base_api_call(
+        context=context,
+        endpoint=f"issues/{context.issue_id}/assignees",
+        method="POST",
+        payload={"assignees": assignees},
     )
