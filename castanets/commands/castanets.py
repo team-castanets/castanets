@@ -74,7 +74,8 @@ def stage_start(stage_idx: int):
     github.comment(context.github_actions, comment)
     github.set_label(context.github_actions, get_castanets_stage_label(stage.label))
     github.set_assignees(context.github_actions, stage.review.reviewers)
-    github.run_workflow(context.github_actions, stage.workflow.filename, stage.workflow.inputs)
+    if stage.workflow:
+        github.run_workflow(context.github_actions, stage.workflow.filename, stage.workflow.inputs)
 
     # State update
     state = github.read_state_from_first_comment(context.github_actions)
@@ -108,7 +109,7 @@ def stage_clean_up():
     github.remove_assignees(context.github_actions, stage.review.reviewers)
     github.write_state_to_first_comment(context.github_actions, {})
 
-    if stage.workflow_clean_up is not None:
+    if stage.workflow_clean_up:
         github.run_workflow(context.github_actions, stage.workflow_clean_up.filename, stage.workflow_clean_up.inputs)
 
 
